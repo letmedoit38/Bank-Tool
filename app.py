@@ -162,5 +162,27 @@ def company_detail(gstin):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/debug/<pincode>")
+def debug(pincode):
+    """Raw debug endpoint - shows exact GST portal response for diagnosis."""
+    results = {}
+    params = {"gstin": "", "tradeName": "", "pinCode": pincode,
+              "stateCode": "", "legalName": "", "taxPayerType": "", "typeCode": 2}
+    try:
+        r1 = requests.get(GST_SEARCH_URL, params=params, headers=HEADERS, timeout=15)
+        results["GET"] = {"status": r1.status_code, "body": r1.text[:2000]}
+    except Exception as e:
+        results["GET"] = {"error": str(e)}
+
+    try:
+        post_headers = {**HEADERS, "Content-Type": "application/json;charset=UTF-8"}
+        r2 = requests.post(GST_SEARCH_URL, json=params, headers=post_headers, timeout=15)
+        results["POST"] = {"status": r2.status_code, "body": r2.text[:2000]}
+    except Exception as e:
+        results["POST"] = {"error": str(e)}
+
+    return jsonify(results)
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host="0.0.0.0")
