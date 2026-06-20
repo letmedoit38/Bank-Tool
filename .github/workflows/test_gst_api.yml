@@ -1,0 +1,63 @@
+name: Test GST Portal API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test GST Search API - GET with pincode
+        run: |
+          echo "=== TEST 1: GET request with pincode 400001 ==="
+          curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET \
+            "https://services.gst.gov.in/services/api/search/taxpayerSearch?pinCode=400001&typeCode=2" \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" \
+            -H "Accept: application/json, text/plain, */*" \
+            -H "Referer: https://services.gst.gov.in/services/searchtp" \
+            -H "Origin: https://services.gst.gov.in"
+          echo ""
+
+      - name: Test GST Search API - POST with pincode
+        run: |
+          echo "=== TEST 2: POST request with pincode 400001 ==="
+          curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
+            "https://services.gst.gov.in/services/api/search/taxpayerSearch" \
+            -H "Content-Type: application/json;charset=UTF-8" \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" \
+            -H "Accept: application/json, text/plain, */*" \
+            -H "Referer: https://services.gst.gov.in/services/searchtp" \
+            -H "Origin: https://services.gst.gov.in" \
+            -d '{"gstin":"","tradeName":"","pinCode":"400001","stateCode":"","legalName":"","taxPayerType":"","typeCode":2}'
+          echo ""
+
+      - name: Test GST Detail API - known GSTIN
+        run: |
+          echo "=== TEST 3: GET GSTIN detail for 27AAPFU0939F1ZV ==="
+          curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET \
+            "https://services.gst.gov.in/services/api/search/taxpayerDetails?gstin=27AAPFU0939F1ZV" \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -H "Accept: application/json" \
+            -H "Referer: https://services.gst.gov.in/services/searchtp"
+          echo ""
+
+      - name: Test GST Detail API - POST GSTIN
+        run: |
+          echo "=== TEST 4: POST GSTIN detail ==="
+          curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
+            "https://services.gst.gov.in/services/api/search/taxpayerDetails" \
+            -H "Content-Type: application/json" \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -H "Accept: application/json" \
+            -H "Referer: https://services.gst.gov.in/services/searchtp" \
+            -d '{"gstin":"27AAPFU0939F1ZV"}'
+          echo ""
+
+      - name: Test alternate public GST search
+        run: |
+          echo "=== TEST 5: Public GSTIN verify endpoint ==="
+          curl -s -w "\nHTTP_STATUS:%{http_code}" \
+            "https://services.gst.gov.in/services/api/search/taxpayerDetails?gstin=27AAPFU0939F1ZV&rtntype=" \
+            -H "User-Agent: Mozilla/5.0" \
+            -H "Referer: https://services.gst.gov.in/"
+          echo ""
