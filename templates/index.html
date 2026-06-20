@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GST Firm Finder — Banker Tool</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">🏦</span>
+      <div>
+        <h1>GST Firm Finder</h1>
+        <p>Banker's Due Diligence Tool</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="search-card">
+    <h2>Find GST Registered Firms</h2>
+    <p class="subtitle">Enter a pincode or use your current location to find registered businesses.</p>
+
+    <div class="search-row">
+      <div class="input-wrap">
+        <input type="text" id="pincodeInput" placeholder="Enter 6-digit Pincode" maxlength="6" pattern="\d{6}"/>
+        <button class="btn-location" id="locationBtn" title="Use my location">
+          📍 Use My Location
+        </button>
+      </div>
+      <button class="btn-search" id="searchBtn">Search Firms</button>
+    </div>
+
+    <div id="locationStatus" class="location-status hidden"></div>
+  </section>
+
+  <section id="resultsSection" class="hidden">
+    <div class="results-header">
+      <h3 id="resultsTitle">Results</h3>
+      <span id="resultsCount" class="badge"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table id="firmsTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Firm Name</th>
+            <th>GSTIN</th>
+            <th>Business Type</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="firmsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+    <p>Fetching data from GST Portal…</p>
+  </div>
+
+  <div id="errorBox" class="error-box hidden"></div>
+
+</main>
+
+<footer class="app-footer">
+  <p>Data sourced from GST Portal (gst.gov.in) · For internal banker use only</p>
+</footer>
+
+<script src="/static/js/index.js"></script>
+</body>
+</html>

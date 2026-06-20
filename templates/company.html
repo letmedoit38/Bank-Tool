@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Company Detail — GST Banker Tool</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">🏦</span>
+      <div>
+        <h1>GST Firm Finder</h1>
+        <p>Banker's Due Diligence Tool</p>
+      </div>
+    </div>
+    <a href="/" class="btn-back">← Back to Search</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <p>Loading company details…</p>
+  </div>
+
+  <div id="errorBox" class="error-box hidden"></div>
+
+  <div id="companyDetail" class="hidden">
+
+    <!-- Top Banner -->
+    <div class="company-banner">
+      <div class="company-title-block">
+        <h2 id="companyName"></h2>
+        <p id="tradeName" class="trade-name"></p>
+        <div class="tag-row">
+          <span id="statusBadge" class="badge"></span>
+          <span id="typeBadge" class="badge badge-blue"></span>
+          <span id="cobBadge" class="badge badge-purple"></span>
+        </div>
+      </div>
+      <div class="loan-score-block">
+        <div id="loanScore" class="loan-score">
+          <div class="score-ring">
+            <span id="scoreNumber">–</span>
+          </div>
+          <p class="score-label">Filing Score</p>
+          <p id="scoreVerdict" class="score-verdict"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+
+      <div class="info-card">
+        <h4>📋 Registration Details</h4>
+        <table class="detail-table">
+          <tr><td>GSTIN</td><td id="d-gstin" class="mono"></td></tr>
+          <tr><td>Registration Date</td><td id="d-regdate"></td></tr>
+          <tr><td>State Jurisdiction</td><td id="d-stj"></td></tr>
+          <tr><td>Central Jurisdiction</td><td id="d-ctj"></td></tr>
+          <tr><td>Cancel Date</td><td id="d-canceldate"></td></tr>
+        </table>
+      </div>
+
+      <div class="info-card">
+        <h4>📍 Address & Contact</h4>
+        <div id="d-address" class="address-block"></div>
+        <div class="contact-row">
+          <a id="d-maps" class="btn-maps hidden" target="_blank">🗺️ Open in Google Maps</a>
+        </div>
+        <div class="contact-row" id="phoneRow" style="display:none">
+          <span class="contact-icon">📞</span>
+          <a id="d-phone" href="#" class="contact-link"></a>
+        </div>
+        <div class="contact-row" id="emailRow" style="display:none">
+          <span class="contact-icon">✉️</span>
+          <a id="d-email" href="#" class="contact-link"></a>
+        </div>
+        <p id="contactNote" class="muted-note"></p>
+      </div>
+
+    </div>
+
+    <!-- Filing History -->
+    <div class="info-card full-width">
+      <h4>📊 GST Return Filing History <span class="muted-note">(GSTR-1 & GSTR-3B)</span></h4>
+      <div id="filingSection">
+        <p class="muted-note">Filing data will appear here if available from GST Portal.</p>
+      </div>
+    </div>
+
+    <!-- Banker Summary -->
+    <div class="info-card full-width banker-summary">
+      <h4>🏦 Banker's Assessment Summary</h4>
+      <div id="bankerSummary"></div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="app-footer">
+  <p>Data sourced from GST Portal (gst.gov.in) · For internal banker use only</p>
+</footer>
+
+<script>
+  const gstin = "{{ gstin }}";
+</script>
+<script src="/static/js/company.js"></script>
+</body>
+</html>
