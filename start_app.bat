@@ -8,7 +8,7 @@ echo ==========================================
 echo.
 
 :: Go to the app folder
-cd /d "%USERPROFILE%\Bank-Tool"
+cd /d "P:\Bank Lead Generater App\Pilot 2"
 
 :: Pull latest updates from GitHub
 echo [1/3] Checking for updates...
